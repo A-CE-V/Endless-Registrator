@@ -9,15 +9,14 @@ app.use(express.json());
 
 const APIS = [
   { name: "endless codeTools", url: "https://endless-code-tools-api.onrender.com/health" },
-  { name: "endless gateway", url: "endless-gateways.onrender.com/health" },
-  { name: "endless conversions", url: "endless-conversions.onrender.com/health" },
-  { name: "endless bureaucracy", url: "endless-bureaucracy.onrender.com/health" },
-  { name: "endless cloudflare service", url: "endless-verifications.onrender.com/health" },
-  { name: "endless artificial connections", url: "endless-artificial-connections.onrender.com/health" },
-  { name: "endless pdf tool box", url: "endless-pdfs-pr2f.onrender.com/health" },
-  { name: "endless vector conversions", url: "endless-vectors-gxda.onrender.com/health" },
-  { name: "endless image conversions", url: "endless-images-second-life.onrender.com/health" },
-  { name: "codeTools", url: "https://endless-code-tools-api.onrender.com/health" },
+  { name: "endless gateway", url: "https://endless-gateways.onrender.com/health" },
+  { name: "endless conversions", url: "https://endless-conversions.onrender.com/health" },
+  { name: "endless bureaucracy", url: "https://endless-bureaucracy.onrender.com/health" },
+  { name: "endless cloudflare service", url: "https://endless-verifications.onrender.com/health" },
+  { name: "endless artificial connections", url: "https://endless-artificial-connections.onrender.com/health" },
+  { name: "endless pdf tool box", url: "https://endless-pdfs-pr2f.onrender.com/health" },
+  { name: "endless vector conversions", url: "https://endless-vectors-gxda.onrender.com/health" },
+  { name: "endless image conversions", url: "https://endless-images-second-life.onrender.com/health" },
 ];
 
 cron.schedule("* * * * *", async () => {

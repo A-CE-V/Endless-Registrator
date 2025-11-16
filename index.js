@@ -60,9 +60,9 @@ function spanishDate() {
 }
 
 // -------------------------
-// CRON JOB — EVERY 1 MINUTE
+// CRON JOB — EVERY 5 MINUTE
 // -------------------------
-cron.schedule("* * * * *", async () => {
+cron.schedule("*/5 * * * *", async () => {
   console.log("[Monitor] Running check...");
 
   for (const api of APIS) {

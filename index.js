@@ -53,7 +53,10 @@ cron.schedule("* * * * *", async () => {
   }
 });
 
-// Endpoint just to see it's alive
+app.get("/health", (req, res) => {
+  res.json({ status: "OK", uptime: process.uptime() });
+});
+
 app.get("/", (req, res) => {
   res.send("Monitor API running");
 });

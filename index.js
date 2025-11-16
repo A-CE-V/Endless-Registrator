@@ -12,11 +12,14 @@ app.use(express.json());
 // -------------------------
 app.use((req, res, next) => {
   const allowedOrigin = process.env.ALLOWED_ORIGINS;
+  const origin = req.headers.origin;
 
-  // Allow internal cron job (no Origin header)
-  if (!req.headers.origin) return next();
 
-  if (req.headers.origin === allowedOrigin) {
+  if (!origin || origin === "null") {
+    return next();
+  }
+
+  if (origin === allowedOrigin) {
     res.header("Access-Control-Allow-Origin", allowedOrigin);
     res.header("Access-Control-Allow-Methods", "GET,POST");
     res.header("Access-Control-Allow-Headers", "Content-Type");
@@ -120,4 +123,6 @@ app.get("/", (req, res) => {
   res.send("Monitor API running");
 });
 
-app.listen(3000, () => console.log("Monitor API active on port 3000"));
+app.listen(3000, () =>
+  console.log("Monitor API active on port 3000")
+);

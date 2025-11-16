@@ -57,7 +57,7 @@ function spanishDate() {
 }
 
 // -------------------------
-// CRON JOB EVERY 1 MINUTE
+// CRON JOB — EVERY 1 MINUTE
 // -------------------------
 cron.schedule("* * * * *", async () => {
   console.log("[Monitor] Running check...");
@@ -84,13 +84,9 @@ cron.schedule("* * * * *", async () => {
 
     const docRef = db.collection("apis-status").doc(api.name);
     const doc = await docRef.get();
-    let history = [];
+    let history = doc.exists ? doc.data().history || [] : [];
 
-    if (doc.exists) {
-      history = doc.data().history || [];
-    }
-
-    // Add history entry ONLY when down
+    // Log history only when DOWN
     if (status === "down") {
       history.push({
         status: "down",
@@ -98,7 +94,6 @@ cron.schedule("* * * * *", async () => {
       });
     }
 
-    // Save everything
     await docRef.set({
       status,
       message,

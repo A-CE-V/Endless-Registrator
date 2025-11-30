@@ -34,7 +34,6 @@ app.use((req, res, next) => {
 // -------------------------
 const APIS = [
   { name: "endless codeTools", url: "https://endless-code-tools-api.onrender.com/health" },
-  { name: "endless gateway", url: "https://endless-gateways.onrender.com/health" },
   { name: "endless conversions", url: "https://endless-conversions.onrender.com/health" },
   { name: "endless bureaucracy", url: "https://endless-bureaucracy.onrender.com/health" },
   { name: "endless cloudflare service", url: "https://endless-verifications.onrender.com/health" },

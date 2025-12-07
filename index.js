@@ -7,9 +7,7 @@ import { db } from "./shared/firebaseAdmin.js";
 const app = express();
 app.use(express.json());
 
-// -------------------------
-// CORS + ORIGIN PROTECTION
-// -------------------------
+
 app.use((req, res, next) => {
   const allowedOrigin = process.env.ALLOWED_ORIGINS;
   const origin = req.headers.origin;
@@ -29,23 +27,20 @@ app.use((req, res, next) => {
   return res.status(403).json({ error: "Forbidden: Unauthorized origin" });
 });
 
-// -------------------------
-// API LIST
-// -------------------------
+
 const APIS = [
   { name: "endless codeTools", url: "https://endless-code-tools-api.onrender.com/health" },
   { name: "endless conversions", url: "https://endless-conversions.onrender.com/health" },
   { name: "endless bureaucracy", url: "https://endless-bureaucracy.onrender.com/health" },
   { name: "endless cloudflare service", url: "https://endless-verifications.onrender.com/health" },
-  { name: "endless artificial connections", url: "https://endless-artificial-connections.onrender.com/health" },
-  { name: "endless pdf tool box", url: "https://endless-pdfs-pr2f.onrender.com/health" },
+  { name: "endless pdf light", url: "https://endless-pdf-light-conversion.onrender.com/health" },
+  { name: "endless pdf heavy", url: "https://endless-pdf-heavy-conversion.onrender.com/health" },
+  { name: "endless pdf conversions", url: "https://endless-pdf-conversions.onrender.com/health" },
   { name: "endless vector conversions", url: "https://endless-vectors-gxda.onrender.com/health" },
   { name: "endless image conversions", url: "https://endless-images-second-life.onrender.com/health" },
 ];
 
-// -------------------------
-// Helper: Format Spanish Date
-// -------------------------
+
 function spanishDate() {
   return new Intl.DateTimeFormat("es-ES", {
     timeZone: "Europe/Madrid",
@@ -58,9 +53,7 @@ function spanishDate() {
   }).format(new Date());
 }
 
-// -------------------------
-// CRON JOB — EVERY 5 MINUTE
-// -------------------------
+
 cron.schedule("*/5 * * * *", async () => {
   console.log("[Monitor] Running check...");
 
@@ -88,13 +81,12 @@ cron.schedule("*/5 * * * *", async () => {
     const doc = await docRef.get();
     let history = doc.exists ? doc.data().history || [] : [];
 
-    // Log history only when DOWN
-    if (status === "down") {
-      history.push({
-        status: "down",
+  
+    history.push({
+        status: status,
         date: formattedDate,
+        responseTime: responseTime
       });
-    }
 
     await docRef.set({
       status,
@@ -108,16 +100,12 @@ cron.schedule("*/5 * * * *", async () => {
   }
 });
 
-// -------------------------
-// HEALTH ENDPOINT
-// -------------------------
+
 app.get("/health", (req, res) => {
   res.json({ status: "OK", uptime: process.uptime() });
 });
 
-// -------------------------
-// DEFAULT ROUTE
-// -------------------------
+
 app.get("/", (req, res) => {
   res.send("Monitor API running");
 });
